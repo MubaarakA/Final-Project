@@ -44,7 +44,38 @@ The `employees` table must already exist — see `database/migration.sql` (run i
 npm start
 ```
 
-`npm start` compiles the Tailwind CSS (`frontend/css/output.css`), connects to MySQL, then launches the server.
+`npm start` just runs the server — it connects to MySQL and listens. Tailwind's CSS (`frontend/css/output.css`) is pre-built and committed to the repo, so production never needs to invoke the `tailwindcss` CLI or install it.
+
+### Local development (CSS changes)
+
+Only needed if you're editing Tailwind classes and want live rebuilds:
+
+```bash
+npm install          # installs devDependencies too
+npm run dev           # watches CSS and restarts the server on change
+```
+
+After editing markup, regenerate the committed CSS before pushing:
+
+```bash
+npm run build:css
+git add frontend/css/output.css
+```
+
+### Deploying to EC2
+
+Install only what's needed at runtime — this skips `tailwindcss`/`postcss`/`nodemon`/`concurrently` entirely, which is both faster and avoids their platform-specific optional downloads getting stuck on a small instance:
+
+```bash
+npm ci --omit=dev
+pm2 restart employee-management-system   # or: pm2 start backend/server.js --name employee-management-system
+```
+
+`npm ci` (not `npm install`) uses `package-lock.json` exactly, which is faster and more reliable on constrained instances. If installs still hang or stall (common on `t2.micro`/`t3.micro` with 1GB RAM), add swap space:
+
+```bash
+sudo fallocate -l 1G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile
+```
 
 Then open **http://localhost:3000**
 
