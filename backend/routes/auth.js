@@ -15,6 +15,8 @@ function sanitizeUser(user) {
 router.post("/register", (req, res, next) => {
   upload.single("profilePicture")(req, res, (err) => {
     if (err) {
+      // Multer errors (bad MIME type, file too large, etc.) — never includes file bytes.
+      console.warn(`[register] rejected upload: ${err.message}`);
       return res.status(400).json({ error: err.message || "Invalid profile picture" });
     }
     handleRegister(req, res, next);
@@ -37,27 +39,34 @@ async function handleRegister(req, res, next) {
     const requiredFields = { fullName, email, phone, employeeId, department, position, password, confirmPassword };
     for (const [key, value] of Object.entries(requiredFields)) {
       if (!value || !String(value).trim()) {
+        // Log which field was missing, never the values (password/confirmPassword included).
+        console.warn(`[register] 400: missing required field "${key}"`);
         return res.status(400).json({ error: `${key} is required` });
       }
     }
 
     if (!EMAIL_REGEX.test(email)) {
+      console.warn(`[register] 400: invalid email format`);
       return res.status(400).json({ error: "Invalid email address" });
     }
 
     if (password.length < 6) {
+      console.warn(`[register] 400: password too short`);
       return res.status(400).json({ error: "Password must be at least 6 characters" });
     }
 
     if (password !== confirmPassword) {
+      console.warn(`[register] 400: password/confirmPassword mismatch`);
       return res.status(400).json({ error: "Passwords do not match" });
     }
 
     if (await findByEmail(email)) {
+      console.warn(`[register] 409: duplicate email`);
       return res.status(409).json({ error: "An account with this email already exists" });
     }
 
     if (await findByEmployeeId(employeeId)) {
+      console.warn(`[register] 409: duplicate employeeId`);
       return res.status(409).json({ error: "This Employee ID is already registered" });
     }
 
@@ -83,6 +92,13 @@ async function handleRegister(req, res, next) {
 
     res.status(201).json({ message: "Account created successfully", user: sanitizeUser(newUser) });
   } catch (err) {
+    // Safe to log: MySQL/AWS SDK error metadata never includes the request body
+    // (so no password), and we never log err.config/err.$metadata credentials.
+    if (err.code === "ER_DUP_ENTRY") {
+      console.warn(`[register] 409: duplicate key on insert (${err.sqlMessage || err.code})`);
+      return res.status(409).json({ error: "An account with this email or Employee ID already exists" });
+    }
+    console.error(`[register] 500: ${err.code || err.name || "error"} - ${err.sqlMessage || err.message}`);
     next(err);
   }
 }

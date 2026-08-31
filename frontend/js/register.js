@@ -1,7 +1,7 @@
 const form = document.getElementById("registerForm");
 const formMessage = document.getElementById("formMessage");
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 function clearErrors() {
   form.querySelectorAll(".error-text").forEach((el) => {
@@ -55,7 +55,7 @@ function validate(data, profilePictureFile) {
   }
 
   if (profilePictureFile && !ALLOWED_IMAGE_TYPES.includes(profilePictureFile.type)) {
-    showFieldError("profilePicture", "Please select a valid image file (jpg, png, webp, gif)");
+    showFieldError("profilePicture", "Please select a valid image file (jpg, png, webp)");
     valid = false;
   }
 

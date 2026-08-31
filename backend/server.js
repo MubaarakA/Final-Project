@@ -46,6 +46,9 @@ app.use((req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
+  // err.stack/err.code/err.sqlMessage are safe to log: mysql2 uses parameterized
+  // queries (placeholders only, never real values) and never embeds credentials here.
+  console.error(`[error] ${req.method} ${req.path} -> ${err.code || err.name || "Error"}: ${err.sqlMessage || err.message}`);
   console.error(err.stack);
   res.status(500).json({ error: "Internal server error" });
 });
