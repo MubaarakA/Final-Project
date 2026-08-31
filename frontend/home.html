@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - Employee Management System</title>
+  <link rel="stylesheet" href="/css/output.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <nav class="bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-lg font-semibold text-slate-900">Employee Management System</a>
+      <div class="flex items-center gap-6 text-sm font-medium">
+        <a href="/profile" class="text-slate-600 hover:text-indigo-600">Profile</a>
+        <button id="logoutBtn" class="text-slate-600 hover:text-indigo-600">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-6 py-16">
+    <h1 id="welcomeMsg" class="text-3xl font-bold text-slate-900 mb-2">Welcome back 👋</h1>
+    <p class="text-slate-500 mb-10">Good to see you again.</p>
+
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8 flex items-center gap-6">
+      <img id="profilePic" src="/images/default-profile.svg" alt="Profile picture"
+           class="w-24 h-24 rounded-full object-cover border border-slate-200" />
+      <div class="flex-1">
+        <h2 id="fullName" class="text-xl font-semibold text-slate-900"></h2>
+        <p id="position" class="text-slate-500"></p>
+        <p id="department" class="text-slate-500 text-sm mb-3"></p>
+        <p class="text-sm text-slate-600">Employee ID: <span id="employeeId" class="font-medium"></span></p>
+        <p class="text-sm text-slate-600">Email: <span id="email" class="font-medium"></span></p>
+      </div>
+    </div>
+
+    <a href="/profile" class="inline-block mt-8 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+      View My Profile
+    </a>
+  </main>
+
+  <script src="/js/home.js"></script>
+</body>
+</html>

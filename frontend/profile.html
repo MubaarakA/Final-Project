@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile - Employee Management System</title>
+  <link rel="stylesheet" href="/css/output.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <nav class="bg-white border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="/" class="text-lg font-semibold text-slate-900">Employee Management System</a>
+      <div class="flex items-center gap-6 text-sm font-medium">
+        <a href="/home" class="text-slate-600 hover:text-indigo-600">Home</a>
+        <button id="logoutBtn" class="text-slate-600 hover:text-indigo-600">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-2xl mx-auto px-6 py-14">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div class="bg-indigo-50 px-8 py-10 text-center">
+        <img id="profilePic" src="/images/default-profile.svg" alt="Profile picture"
+             class="w-32 h-32 rounded-full object-cover border-4 border-white shadow mx-auto mb-4" />
+        <h1 id="fullName" class="text-2xl font-bold text-slate-900"></h1>
+        <p id="position" class="text-slate-500"></p>
+      </div>
+
+      <div class="px-8 py-8 space-y-8">
+        <div>
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-4">Personal Information</h2>
+          <dl class="space-y-3 text-sm">
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <dt class="text-slate-500">Full Name</dt>
+              <dd id="infoFullName" class="font-medium text-slate-900"></dd>
+            </div>
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <dt class="text-slate-500">Employee ID</dt>
+              <dd id="infoEmployeeId" class="font-medium text-slate-900"></dd>
+            </div>
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <dt class="text-slate-500">Email</dt>
+              <dd id="infoEmail" class="font-medium text-slate-900"></dd>
+            </div>
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <dt class="text-slate-500">Phone</dt>
+              <dd id="infoPhone" class="font-medium text-slate-900"></dd>
+            </div>
+          </dl>
+        </div>
+
+        <div>
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500 mb-4">Work Information</h2>
+          <dl class="space-y-3 text-sm">
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <dt class="text-slate-500">Department</dt>
+              <dd id="infoDepartment" class="font-medium text-slate-900"></dd>
+            </div>
+            <div class="flex justify-between border-b border-slate-100 pb-2">
+              <dt class="text-slate-500">Position</dt>
+              <dd id="infoPosition" class="font-medium text-slate-900"></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/profile.js"></script>
+</body>
+</html>
