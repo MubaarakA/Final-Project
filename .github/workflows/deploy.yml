@@ -13,9 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Sync checkout into deployment directory
+        # actions/checkout clones into the runner's own workspace, not
+        # /home/ubuntu/Final-Project, so copy the fresh code there first.
+        run: |
+          mkdir -p /home/ubuntu/Final-Project
+          rsync -a --delete --exclude node_modules --exclude .env "$GITHUB_WORKSPACE"/ /home/ubuntu/Final-Project/
+
       - name: Install dependencies
         run: npm install
-        # Using the exact system path solves the folder error
         working-directory: /home/ubuntu/Final-Project
 
       - name: Run tests
