@@ -6,6 +6,7 @@
   "scripts": {
     "build:css": "tailwindcss -i ./frontend/css/input.css -o ./frontend/css/output.css --minify",
     "start": "node backend/server.js",
+    "test": "echo \"No tests specified\" && exit 0",
     "dev": "concurrently \"tailwindcss -i ./frontend/css/input.css -o ./frontend/css/output.css --watch\" \"nodemon backend/server.js\""
   },
   "dependencies": {
