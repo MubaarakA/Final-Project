@@ -15,13 +15,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ~/Final-Project
+        # Using the exact system path solves the folder error
+        working-directory: /home/ubuntu/Final-Project
 
       - name: Run tests
         run: npm test
-        working-directory: ~/Final-Project
+        working-directory: /home/ubuntu/Final-Project
 
       - name: Restart application with PM2
         if: success()
         run: pm2 restart employee-system
-        working-directory: ~/Final-Project
+        working-directory: /home/ubuntu/Final-Project
