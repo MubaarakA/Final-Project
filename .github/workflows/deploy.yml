@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Skips checkout's post-job credential cleanup (which runs a
+          # `git submodule foreach` even with no submodules) — that step is
+          # known to hang on some self-hosted runners. We don't need git to
+          # keep credentials past this job anyway.
+          persist-credentials: false
 
       - name: Sync checkout into deployment directory
         # actions/checkout clones into the runner's own workspace, not
